@@ -1,3 +1,6 @@
+const { NavLink } = ReactRouterDOM
+
+
 export function AppHeader(){
 
 
@@ -6,9 +9,9 @@ export function AppHeader(){
             <section>
                 <h1>Miss Books App</h1>
                 <nav className="app-nav">
-                    <a>Home</a>
-                    <a>About</a>
-                    <a>Books</a>
+                    <NavLink to="/home">Home</NavLink>
+                    <NavLink to="/about">About</NavLink>
+                    <NavLink to="/book">Books</NavLink>
                 </nav>
             </section>
         </header>
