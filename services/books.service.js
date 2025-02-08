@@ -41,6 +41,7 @@ function save(book){
 function _createBooks(){
     let existing_books = loadFromStorage(BOOK_KEY)
     if (!existing_books || existing_books.length === 0){
+        console.log(books)
         saveToStorage(BOOK_KEY, books)
     }
 }
