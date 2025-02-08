@@ -23,7 +23,7 @@
 }
 
 .app-header a.active {
-    color: var(--clr2bg);
+    color: var(--clr2bg-light);
     font-weight: 600;
     text-decoration: underline;
 }
