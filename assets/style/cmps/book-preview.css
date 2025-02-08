@@ -1,4 +1,4 @@
-.car-preview {
+.book-preview {
     text-align: center;
     padding: 0.5em;
     display: flex;
@@ -6,11 +6,11 @@
     align-items: center;
 }
 
-.car-preview h4 {
+.book-preview h4 {
     text-transform: capitalize;
     color: black;
 }
 
-.car-preview img {
+.book-preview img {
     max-width: 100px;
 }
