@@ -1,15 +1,24 @@
 .books-filter {
-    background-color: var(--clr2bg);
+    background-color: var(--clr2bg-light);
     padding: 0.3rem 1em;
     margin-block: .5em 1em;
 }
 
 .books-filter form {
     display: grid;
-    grid-template-columns: 100px 200px;
+    grid-template-columns: 150px 75px;
     gap: .3em;
 }
 
 .books-filter form button {
     margin-inline: 0
+}
+
+.books-filter h2 {
+    margin-block-start: 0.1em;
+}
+
+#sale {
+    margin-inline: 0;
+    justify-self: start;
 }

@@ -6,7 +6,8 @@ export const bookService = {
     query,
     get,
     remove,
-    save
+    save,
+    getDefaultFilter
 }
 
 const BOOK_KEY = "books"
@@ -15,8 +16,14 @@ const BOOK_KEY = "books"
 _createBooks()
 
 
-function query(){
+function query(filter){
     return storageService.query(BOOK_KEY)
+        .then(books => {
+            if (filter.maxPageCount) books = books.filter(book => book.pageCount <= filter.maxPageCount)
+            if (filter.maxPrice) books = books.filter(book => book.listPrice.amount <= filter.maxPrice)
+            if (filter.onSale) books = books.filter(book => book.listPrice.isOnSale)
+            return books
+        })
 }
 
 function get(bookId){
@@ -34,6 +41,14 @@ function save(book){
     }
     else {
         return storageService.post(BOOK_KEY, book)
+    }
+}
+
+function getDefaultFilter(){
+    return {
+        maxPageCount: 0,
+        maxPrice: 1000,
+        onSale: false
     }
 }
 

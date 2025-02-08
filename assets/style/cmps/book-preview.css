@@ -11,6 +11,10 @@
     color: black;
 }
 
+.price {
+    color: var(--clr2)
+}
+
 .book-preview img {
     max-width: 100px;
 }

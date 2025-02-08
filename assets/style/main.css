@@ -20,7 +20,7 @@
 /* Components */
 @import "cmps/app-header.css";
 @import "cmps/books-list.css";
+@import "cmps/books-filter.css";
 @import "cmps/book-preview.css";
-/* @import "cmps/book-filter.css";
-@import "cmps/not-found.css"; */
+/* @import "cmps/not-found.css"; */
 
