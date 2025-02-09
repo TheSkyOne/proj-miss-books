@@ -6,6 +6,7 @@ const { useParams, useNavigate, Link } = ReactRouterDOM
 export function BookDetails(){
     const [book, setBook] = useState(null)
     const url_params = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         loadBook()
@@ -14,7 +15,7 @@ export function BookDetails(){
     function loadBook(){
         bookService.get(url_params.bookId)
             .then(setBook)
-            .catch(err => console.log("cant get book: ", err))
+            .catch(() => navigate("/not-found"))
     }
 
     const readingType = book ?
