@@ -24,6 +24,14 @@
     text-transform: capitalize;
 }
 
+.pages-count {
+    margin-top: 0px;
+}
+
+.reading-type {
+    color: var(--clr2);
+}
+
 .book-details .authors {
     color: var(--clr1)
 }
@@ -43,4 +51,17 @@
 .book-details .description::first-line {
     font-weight: 600;
     color: var(--clr1bg)
+}
+
+.price-display {
+    border: 2px black dashed;
+    padding: 0.3em
+}
+
+.expensive {
+    color:crimson;
+}
+
+.cheap {
+    color: lawngreen;
 }
