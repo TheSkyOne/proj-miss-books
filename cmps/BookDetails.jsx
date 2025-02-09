@@ -47,6 +47,10 @@ export function BookDetails(){
             <h4>Publication Year: {book.publishedDate} - <span>{ageStatus}</span></h4>
             <p className="description">Description:<br></br>{book.description}</p>
             <h2 className="price-display">Price: <span className={priceClass}>{book.listPrice.amount}</span></h2>
+            <div className="navigation">
+                <button><Link to={`/books/${book.prevBookId}`}>Previous Book</Link></button>
+                <button><Link to={`/books/${book.nextBookId}`}>Next Book</Link></button>
+            </div>
         </section>
 
     )

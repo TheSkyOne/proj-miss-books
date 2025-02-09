@@ -22,5 +22,5 @@
 @import "cmps/books-list.css";
 @import "cmps/books-filter.css";
 @import "cmps/book-preview.css";
-/* @import "cmps/not-found.css"; */
+@import "cmps/not-found.css";
 

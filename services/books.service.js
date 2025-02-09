@@ -16,7 +16,7 @@ const BOOK_KEY = "books"
 _createBooks()
 
 
-function query(filter){
+function query(filter = {}){
     return storageService.query(BOOK_KEY)
         .then(books => {
             if (filter.maxPageCount) books = books.filter(book => book.pageCount <= filter.maxPageCount)
@@ -28,6 +28,7 @@ function query(filter){
 
 function get(bookId){
     return storageService.get(BOOK_KEY, bookId)
+            .then(_setNextPrevBookId) // whenever we retrive a book from storage, set its previous and next book's IDs
 }
 
 function remove(bookId){
@@ -53,6 +54,18 @@ function getDefaultFilter(){
 }
 
 
+function _setNextPrevBookId(book){
+    return query()
+        .then(books => {
+            const curBookIdx = books.findIndex(curBook => curBook.id === book.id)
+            const nextBook = books[curBookIdx + 1] ? books[curBookIdx + 1] : books[0]
+            const prevBook = books[curBookIdx - 1] ? books[curBookIdx - 1] : books[books.length - 1]
+            book.nextBookId = nextBook.id
+            book.prevBookId = prevBook.id
+            return book
+        })
+}
+
 function _createBooks(){
     let existing_books = loadFromStorage(BOOK_KEY)
     if (!existing_books || existing_books.length === 0){
@@ -60,3 +73,4 @@ function _createBooks(){
         saveToStorage(BOOK_KEY, books)
     }
 }
+
