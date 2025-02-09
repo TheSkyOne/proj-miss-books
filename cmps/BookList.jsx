@@ -1,4 +1,5 @@
 import { BookPreview } from "./BookPreview.jsx"
+const { Link } = ReactRouterDOM
 
 export function BookList({ books }) {
 
@@ -7,6 +8,7 @@ export function BookList({ books }) {
             {books.map(book => 
                 <li key={book.id}>
                     <BookPreview book={book}></BookPreview>
+                    <button><Link to={`/books/${book.id}`}>Details</Link></button>
                 </li>
             )}
         </ul>

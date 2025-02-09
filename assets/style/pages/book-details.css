@@ -1,21 +1,46 @@
-.car-details {
+.book-details {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     padding-bottom: 15vh;
 }
 
-.car-details h1 {
+.book-details h1 {
     color: var(--clr1);
-    font-size: 2em;
+    font-size: 4em;
+    font-weight: bolder;
+    margin-block-end: 0;
+    text-transform: capitalize;
 }
 
-.car-details h5 {
+.book-details .subtitle {
+    font-size: 1.5em;
+    margin-block-start: 0;
     color: var(--clr2);
 }
-.car-details img {
-    max-width: 200px;
+
+.book-details .subtitle::first-letter {
+    text-transform: capitalize;
+}
+
+.book-details .authors {
+    color: var(--clr1)
+}
+
+.book-details img {
+    max-width: 300px;
     display: block;
-    margin: auto;
+    margin: 1em auto;
+}
+
+.book-details .description {
+    font-weight: 500;
+    color: var(--clr1bg);
+    padding: 0em 2em;
+}
+
+.book-details .description::first-line {
+    font-weight: 600;
+    color: var(--clr1bg)
 }
