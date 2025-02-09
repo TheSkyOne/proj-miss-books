@@ -7,7 +7,7 @@
     margin-top: 0;
 }
 
-.books-list  li {
+.books-list li {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
