@@ -4,7 +4,7 @@ export function BookPreview({ book }) {
 
     return (
         <article className="book-preview">
-            {book.listPrice.isOnSale && <img className="sale-img" src="/assets/misc/sale_banner.png"></img>}
+            {book.listPrice.isOnSale && <img className="sale-img" src="assets/misc/sale_banner.png"></img>}
             <h4>{book.title}</h4>
             <h5>{book.subtitle}</h5>
             <img src={book.thumbnail} alt="book's cover image"></img>
