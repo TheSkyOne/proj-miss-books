@@ -32,7 +32,6 @@ function get(bookId){
 }
 
 function remove(bookId){
-    //ask about return value, since storageService.remove returns a promise which resolves to undefined
     return storageService.remove(BOOK_KEY, bookId) 
 }
 

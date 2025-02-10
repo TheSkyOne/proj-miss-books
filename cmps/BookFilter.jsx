@@ -2,11 +2,11 @@ const { useState, useEffect } = React
 
 
 export function BookFilter({ filter, onSetFilter }) {
-    const [editedFilter, setEditedFilter] = useState({ ...filter })
+    // const [editedFilter, setEditedFilter] = useState({ ...filter })
 
-    useEffect(() => {
-        onSetFilter(editedFilter)
-    }, [editedFilter])
+    // useEffect(() => {
+    //     onSetFilter(editedFilter)
+    // }, [editedFilter])
 
 
     function onFilterChanged({ target }) {
@@ -20,11 +20,12 @@ export function BookFilter({ filter, onSetFilter }) {
                 break
         }
 
-        setEditedFilter(prevFitler => ({ ...prevFitler, [field]: value }))
+        onSetFilter({ ...filter, [field]: value })
+        // setEditedFilter(prevFitler => ({ ...prevFitler, [field]: value }))
     }
 
 
-    const { maxPageCount, maxPrice, onSale } = editedFilter
+    const { maxPageCount, maxPrice, onSale } = filter
     return (
         <section className="books-filter">
             <h2>Filter Books</h2>
