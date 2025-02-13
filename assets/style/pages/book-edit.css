@@ -1,13 +1,17 @@
-.car-edit {
+.book-edit {
     text-align: center;
+    border: 2px black dashed;
+    width: max-content;
+
+    margin: 1rem auto;
 }
 
-.car-edit.loading {
+.book-edit.loading {
     opacity: 0.4;
     pointer-events: none;
 }
 
-.car-edit form {
+.book-edit form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,9 +22,19 @@
     margin-top: 50px;
 }
 
-.car-edit form input {
+.book-edit form input {
     max-width: 300px;
     margin-bottom: 15px;
+}
+
+.book-edit form input:focus {
+    color: white;
+}
+
+
+.book-edit form label[for]:has(+ input[required])::after {
+    content: "*";
+    color: red;
 }
 
 .back-btn {

@@ -38,24 +38,6 @@ export function BookDetails(){
     }
     const displayData = getBookDisplayData()
 
-    // const readingType = book ?
-                            // book.pageCount < 100 ? "Light Reading" 
-                            // : book.pageCount < 500 ? "Decent Reading" 
-                            // : "Serious Reading"
-    //                     : ""
-    
-    // const ageStatus = book ?
-                        // book.publishedDate > 10 ? "Vintage"
-                        // : book.publishedDate < 1 ? "New"
-                        // : ""
-    //                 : ""
-
-    // const priceClass = book ?
-                        // book.listPrice.amount > 150 ? "expensive"
-                        // : book.listPrice.amount < 20 ? "cheap"
-                        // : ""
-    //                 : ""
-
     if (!book) return <div className="loader">Loading...</div>
     return (
         <section className="book-details">
