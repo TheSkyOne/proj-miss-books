@@ -7,7 +7,8 @@ export const bookService = {
     get,
     remove,
     save,
-    getDefaultFilter
+    getDefaultFilter,
+    getEmptyBook
 }
 
 const BOOK_KEY = "books"
@@ -49,6 +50,23 @@ function getDefaultFilter(){
         maxPageCount: 0,
         maxPrice: 1000,
         onSale: false
+    }
+}
+
+function getEmptyBook(){
+    return {
+        title: "",
+        subtitle: "",
+        categories: [],
+        pageCount: 0,
+        thumnail: null,
+        authors: [],
+        publishedDate: 0,
+        description: "",
+        listPrice: {
+            amount: 0,
+            isOnSale: false
+        }
     }
 }
 

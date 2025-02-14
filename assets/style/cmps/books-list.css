@@ -9,9 +9,21 @@
 
 .books-list li {
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     background-color: var(--clr1bg);
     padding: 0.4rem;
+}
+
+.book-options {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.remove-button {
+    position: absolute;
+    top: 0;
+    right: 0;
 }

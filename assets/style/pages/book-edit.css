@@ -1,26 +1,41 @@
-.car-edit {
+.book-edit {
     text-align: center;
+    border: 2px black dashed;
+    width: max-content;
+    margin: 1rem auto;
+    font-family: 'Edu VIC WA NT Beginner', cursive;
+    font-size: 1.5rem;
 }
 
-.car-edit.loading {
+.book-edit.loading {
     opacity: 0.4;
     pointer-events: none;
 }
 
-.car-edit form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1.5rem;
-    font-family: 'Edu VIC WA NT Beginner', cursive;
-    width: 50vw;
-    margin: auto;
-    margin-top: 50px;
+.book-edit form {
+    text-align: left;
+    display: grid;
+    grid-template-columns: 12rem 38rem;
+    padding: 2rem;
+    padding-bottom: 0;
+    gap: 0.8rem;
 }
 
-.car-edit form input {
+.book-edit form input,
+.book-edit form textarea {
     max-width: 300px;
-    margin-bottom: 15px;
+    align-self: center;
+}
+
+
+.book-edit form input:focus {
+    color: white;
+}
+
+
+.book-edit form label[for]:has(+ input[required])::after {
+    content: " *";
+    color: red;
 }
 
 .back-btn {
@@ -30,4 +45,18 @@
         background-color: black;
         color: white;
     }
+}
+
+.save-book {
+    margin: 0;
+    margin-top: 17rem;
+    padding: 0.5rem 2.5rem;
+    justify-self: start;
+}
+
+.save-book[disabled] {
+    background-color: grey;
+    border-color: gray;
+    color: black;
+
 }

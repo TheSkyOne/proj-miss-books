@@ -1,4 +1,5 @@
 const { useEffect, useState } = React
+const { Link } = ReactRouterDOM
 import { bookService } from "../services/books.service.js"
 import { BookList } from "../cmps/BookList.jsx"
 import { BookFilter } from "../cmps/BookFilter.jsx"
@@ -21,12 +22,21 @@ export function BookIndex() {
         setFilter(prevFilter => ({ ...prevFilter, ...newFilter }))
     }
 
+    function onRemoveClicked(bookId){
+        bookService.remove(bookId)
+            .then(() => {
+                setBooks(prevBooks => prevBooks.filter(book => book.id !== bookId))
+                console.log("book removed successfully")
+            })
+            .catch((err) => console.error("failed to remove book", err))
+    }
 
     if (!books) return <div className="loader">Loading...</div>
     return (
         <section className="book-index">
             <BookFilter onSetFilter={onFilterChanged} filter={filter} />
-            <BookList books={books} />
+            <button className="add-book"><Link to="/books/edit">Add Book</Link></button>
+            <BookList books={books} onRemoveBook={onRemoveClicked} />
         </section>
     )
 }

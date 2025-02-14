@@ -1,6 +1,5 @@
 export function BookPreview({ book }) {
 
-
     return (
         <article className="book-preview">
             {book.listPrice.isOnSale && <img className="sale-img" src="./assets/misc/sale_banner.png"></img>}
