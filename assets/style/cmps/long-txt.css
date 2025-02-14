@@ -1,0 +1,11 @@
+.long-txt-para {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 500px;
+    width: 100%;
+}
+
+.long-txt-expand-button {
+    margin-inline-start: 100%;
+    transform: translateX(-100%);
+}

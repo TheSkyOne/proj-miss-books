@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-bottom: 15vh;
+    padding-bottom: 5vh;
 }
 
 .book-details h1 {
@@ -48,9 +48,8 @@
     padding: 0em 2em;
 }
 
-.book-details .description::first-line {
-    font-weight: 600;
-    color: var(--clr1bg)
+.book-details .description .desc-title {
+    text-align: center;
 }
 
 .price-display {
@@ -67,6 +66,7 @@
 }
 
 .navigation {
+    margin-block-start: auto;
     display: flex;
     gap: 0.5vw;
 }

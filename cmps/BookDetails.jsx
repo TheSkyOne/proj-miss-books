@@ -1,4 +1,5 @@
 import { bookService } from "../services/books.service.js"
+import { LongTxt } from "./LongTxt.jsx"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
@@ -48,7 +49,10 @@ export function BookDetails(){
             <img src={book.thumbnail} alt="book's cover image"></img>
             <h3 className="authors">Written by: {book.authors.join(" & ")}</h3>
             <h4>Publication Year: {book.publishedDate} - <span>{displayData.ageStatus}</span></h4>
-            <p className="description">Description:<br></br>{book.description}</p>
+            <section className="description">
+                <h2 className="desc-title">Description:</h2>
+                <LongTxt>{book.description}</LongTxt>
+            </section>
             <h2 className="price-display">Price: <span className={displayData.priceClass}>{book.listPrice.amount}</span></h2>
             <div className="navigation">
                 <button><Link to={`/books/${book.prevBookId}`}>Previous Book</Link></button>
