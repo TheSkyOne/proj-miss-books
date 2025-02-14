@@ -38,6 +38,16 @@
     color: red;
 }
 
+.book-edit form input:focus {
+    color: white;
+}
+
+
+.book-edit form label[for]:has(+ input[required])::after {
+    content: "*";
+    color: red;
+}
+
 .back-btn {
     background-color: white;
 
