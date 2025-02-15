@@ -1,0 +1,19 @@
+.review-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.review-section .submit-review {
+    margin-inline-start: 0;
+    margin-block-end: 5rem;
+}
+
+.review-section h1{
+    font-size: 48px;
+    color: var(--clr1)
+}
+
+.review-section h2 {
+    color: var(--clr1);
+}

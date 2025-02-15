@@ -4,7 +4,7 @@ import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 const { useState } = React
 
 
-export function AddReview({ bookId }) {
+export function AddReview({ bookId, onReviewAdded }) {
     const [review, setReview] = useState(reviewService.getEmptyReview())
 
     function handleInputLoseFocus({ target }) {
@@ -23,7 +23,10 @@ export function AddReview({ bookId }) {
     function onReviewSubmit(ev) {
         ev.preventDefault()
         reviewService.addReview(bookId, review)
-            .then(() => showSuccessMsg("Review added successfully!"))
+            .then(() => {
+                showSuccessMsg("Review added successfully!")
+                onReviewAdded(review)
+            })
             .catch(() => showErrorMsg("Review could not be added..."))
     }
 

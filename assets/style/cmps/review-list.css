@@ -1,0 +1,12 @@
+.review-list > :not(:last-child) {
+    margin-block-end: 2rem;
+}
+
+.review-list-item-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.remove-review {
+    align-self: center;
+}

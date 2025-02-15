@@ -1,12 +1,15 @@
 import { bookService } from "../services/books.service.js"
 import { LongTxt } from "./LongTxt.jsx"
 import { AddReview } from "./AddReview.jsx"
+import { ReviewList } from "./ReviewList.jsx"
+import { ReviewListItem } from "./ReviewListItem.jsx"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
 
 export function BookDetails(){
     const [book, setBook] = useState(null)
+    const [reviews, setReviews] = useState([])
     const url_params = useParams()
     const navigate = useNavigate()
 
@@ -16,7 +19,10 @@ export function BookDetails(){
 
     function loadBook(){
         bookService.get(url_params.bookId)
-            .then(setBook)
+            .then(book => {
+                setBook(book)
+                setReviews(book.reviews)
+            })
             .catch(() => navigate("/not-found"))
     }
 
@@ -38,9 +44,25 @@ export function BookDetails(){
                             : ""
         }
     }
-    const displayData = getBookDisplayData()
+
+    function onReviewAdded(review){
+        setReviews(prevReviews => [...prevReviews, review])
+    }
+
+    function onReviewRemoveClicked(reviewId) {
+        bookService.get(book.id)
+            .then(book => {
+                book.reviews = book.reviews.filter(review => review.id !== reviewId)
+                bookService.save(book)
+                    .then(() => setReviews(prevReviews => prevReviews.filter(review => review.id !== reviewId)))
+                
+            })
+    }
 
     if (!book) return <div className="loader">Loading...</div>
+
+    const displayData = getBookDisplayData()
+    const hasReviews = reviews && reviews.length > 0
     return (
         <section className="book-details-page">
             <section className="book-details">
@@ -63,8 +85,22 @@ export function BookDetails(){
             </section>
 
             <section className="review-section">
-                <h2>Review This Book!</h2>
-                <AddReview bookId={book.id}></AddReview>
+                <h1>Review This Book!</h1>
+                <AddReview bookId={book.id} onReviewAdded={onReviewAdded}></AddReview>
+                <h2>Reviews:</h2>
+                <ReviewList onReviewRemoveClicked={onReviewRemoveClicked}>
+                    {hasReviews ?
+                        reviews.map(review => (
+                            <ReviewListItem
+                                key={review.id} 
+                                review={review}
+                            />
+                        ))
+                        :
+                        <h1>No reviews yet</h1>
+                    }
+                </ReviewList>
+
             </section>
         </section>
     )

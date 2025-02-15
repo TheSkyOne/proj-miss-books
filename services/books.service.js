@@ -79,6 +79,7 @@ function getEmptyBook() {
 function addReview(bookId, review) {
     return get(bookId)
         .then(book => {
+            review["id"] = review["id"] || makeId()
             if (book.reviews) book.reviews.push(review)
             else book["reviews"] = [review]
             return save(book)
@@ -91,6 +92,7 @@ function addReview(bookId, review) {
 
 function getEmptyReview() {
     return {
+        id: "",
         reviewerName: "",
         rating: 1,
         readDate: ""
