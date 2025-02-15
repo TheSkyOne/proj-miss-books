@@ -1,5 +1,6 @@
 import { bookService } from "../services/books.service.js"
 import { LongTxt } from "./LongTxt.jsx"
+import { AddReview } from "./AddReview.jsx"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
@@ -41,24 +42,30 @@ export function BookDetails(){
 
     if (!book) return <div className="loader">Loading...</div>
     return (
-        <section className="book-details">
-            <h1>{book.title}</h1>
-            <h3 className="subtitle">{book.subtitle}</h3>
-            <h4>Genres: {book.categories.join(", ")}</h4>
-            <h4 className="pages-count">Pages: {book.pageCount} - <span className="reading-type">{displayData.readingType}</span> </h4>
-            <img src={book.thumbnail} alt="book's cover image"></img>
-            <h3 className="authors">Written by: {book.authors.join(" & ")}</h3>
-            <h4>Publication Year: {book.publishedDate} - <span>{displayData.ageStatus}</span></h4>
-            <section className="description">
-                <h2 className="desc-title">Description:</h2>
-                <LongTxt>{book.description}</LongTxt>
+        <section className="book-details-page">
+            <section className="book-details">
+                <h1>{book.title}</h1>
+                <h3 className="subtitle">{book.subtitle}</h3>
+                <h4>Genres: {book.categories.join(", ")}</h4>
+                <h4 className="pages-count">Pages: {book.pageCount} - <span className="reading-type">{displayData.readingType}</span> </h4>
+                <img src={book.thumbnail} alt="book's cover image"></img>
+                <h3 className="authors">Written by: {book.authors.join(" & ")}</h3>
+                <h4>Publication Year: {book.publishedDate} - <span>{displayData.ageStatus}</span></h4>
+                <section className="description">
+                    <h2 className="desc-title">Description:</h2>
+                    <LongTxt>{book.description}</LongTxt>
+                </section>
+                <h2 className="price-display">Price: <span className={displayData.priceClass}>{book.listPrice.amount}</span></h2>
+                <div className="navigation">
+                    <button><Link to={`/books/${book.prevBookId}`}>Previous Book</Link></button>
+                    <button><Link to={`/books/${book.nextBookId}`}>Next Book</Link></button>
+                </div>
             </section>
-            <h2 className="price-display">Price: <span className={displayData.priceClass}>{book.listPrice.amount}</span></h2>
-            <div className="navigation">
-                <button><Link to={`/books/${book.prevBookId}`}>Previous Book</Link></button>
-                <button><Link to={`/books/${book.nextBookId}`}>Next Book</Link></button>
-            </div>
-        </section>
 
+            <section className="review-section">
+                <h2>Review This Book!</h2>
+                <AddReview bookId={book.id}></AddReview>
+            </section>
+        </section>
     )
 }

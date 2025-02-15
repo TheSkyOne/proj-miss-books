@@ -11,13 +11,18 @@ export const bookService = {
     getEmptyBook
 }
 
+export const reviewService = {
+    addReview,
+    getEmptyReview
+}
+
 const BOOK_KEY = "books"
 
 
 _createBooks()
 
 
-function query(filter = {}){
+function query(filter = {}) {
     return storageService.query(BOOK_KEY)
         .then(books => {
             if (filter.maxPageCount) books = books.filter(book => book.pageCount <= filter.maxPageCount)
@@ -27,16 +32,16 @@ function query(filter = {}){
         })
 }
 
-function get(bookId){
+function get(bookId) {
     return storageService.get(BOOK_KEY, bookId)
-            .then(_setNextPrevBookId) // whenever we retrive a book from storage, set its previous and next book's IDs
+        .then(_setNextPrevBookId) // whenever we retrive a book from storage, set its previous and next book's IDs
 }
 
-function remove(bookId){
-    return storageService.remove(BOOK_KEY, bookId) 
+function remove(bookId) {
+    return storageService.remove(BOOK_KEY, bookId)
 }
 
-function save(book){
+function save(book) {
     if (book.id) {
         return storageService.put(BOOK_KEY, book)
     }
@@ -45,7 +50,7 @@ function save(book){
     }
 }
 
-function getDefaultFilter(){
+function getDefaultFilter() {
     return {
         maxPageCount: 0,
         maxPrice: 1000,
@@ -53,7 +58,7 @@ function getDefaultFilter(){
     }
 }
 
-function getEmptyBook(){
+function getEmptyBook() {
     return {
         title: "",
         subtitle: "",
@@ -71,7 +76,29 @@ function getEmptyBook(){
 }
 
 
-function _setNextPrevBookId(book){
+function addReview(bookId, review) {
+    return get(bookId)
+        .then(book => {
+            if (book.reviews) book.reviews.push(review)
+            else book["reviews"] = [review]
+            return save(book)
+        })
+        .catch(err => {
+            console.error("failed to add review because failed to retrieve book", err)
+            return Promise.reject(err)
+        })
+}
+
+function getEmptyReview() {
+    return {
+        reviewerName: "",
+        rating: 1,
+        readDate: ""
+    }
+}
+
+
+function _setNextPrevBookId(book) {
     return query()
         .then(books => {
             const curBookIdx = books.findIndex(curBook => curBook.id === book.id)
@@ -83,9 +110,9 @@ function _setNextPrevBookId(book){
         })
 }
 
-function _createBooks(){
+function _createBooks() {
     let existing_books = loadFromStorage(BOOK_KEY)
-    if (!existing_books || existing_books.length === 0){
+    if (!existing_books || existing_books.length === 0) {
         console.log(books)
         saveToStorage(BOOK_KEY, books)
     }

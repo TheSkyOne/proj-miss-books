@@ -68,9 +68,6 @@ export function BookEdit() {
             }) 
     }
 
-
-    
-
     const {
         title,
         description,
