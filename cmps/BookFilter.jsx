@@ -25,11 +25,14 @@ export function BookFilter({ filter, onSetFilter }) {
     }
 
 
-    const { maxPageCount, maxPrice, onSale } = filter
+    const { title, maxPageCount, maxPrice, onSale } = filter
     return (
         <section className="books-filter">
             <h2>Filter Books</h2>
             <form>
+                <label htmlFor="title">Book Title:</label>
+                <input onChange={onFilterChanged} type="text" id="title" name="title" min={0} max={1000} value={title}></input>
+
                 <label htmlFor="page-count">Max Page Count:</label>
                 <input onChange={onFilterChanged} type="number" id="page-count" name="maxPageCount" min={0} max={1000} value={maxPageCount}></input>
 

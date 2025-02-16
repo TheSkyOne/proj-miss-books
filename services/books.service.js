@@ -25,6 +25,7 @@ _createBooks()
 function query(filter = {}) {
     return storageService.query(BOOK_KEY)
         .then(books => {
+            if (filter.title) books = books.filter(book => book.title.includes(filter.title))
             if (filter.maxPageCount) books = books.filter(book => book.pageCount <= filter.maxPageCount)
             if (filter.maxPrice) books = books.filter(book => book.listPrice.amount <= filter.maxPrice)
             if (filter.onSale) books = books.filter(book => book.listPrice.isOnSale)
