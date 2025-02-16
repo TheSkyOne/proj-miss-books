@@ -7,3 +7,7 @@
     margin: 0;
     padding: 1rem 2rem;
 }
+
+.search-google-books {
+    margin-inline-start: 1rem;
+}

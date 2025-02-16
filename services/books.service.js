@@ -22,7 +22,7 @@ const BOOK_KEY = "books"
 _createBooks()
 
 
-function query(filter = {}) {
+export function query(filter = {}) {
     return storageService.query(BOOK_KEY)
         .then(books => {
             if (filter.title) books = books.filter(book => book.title.includes(filter.title))
@@ -42,7 +42,7 @@ function remove(bookId) {
     return storageService.remove(BOOK_KEY, bookId)
 }
 
-function save(book) {
+export function save(book) {
     if (book.id) {
         return storageService.put(BOOK_KEY, book)
     }
@@ -59,13 +59,13 @@ function getDefaultFilter() {
     }
 }
 
-function getEmptyBook() {
+export function getEmptyBook() {
     return {
         title: "",
         subtitle: "",
         categories: [],
         pageCount: 0,
-        thumnail: null,
+        thumbnail: null,
         authors: [],
         publishedDate: 0,
         description: "",

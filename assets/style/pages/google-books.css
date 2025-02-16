@@ -1,0 +1,16 @@
+.google-book-list-item {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background-color: transparent;
+    width: max-content;
+}
+
+.google-book-list-item:hover {
+    background-color: var(--clr1bg-light);
+}
+
+.google-book-list-item .add-google-book {
+    border-radius: 50%;
+    padding: 0.5px 3.5px;
+}

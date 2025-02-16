@@ -9,6 +9,7 @@ import { BookDetails } from "./cmps/BookDetails.jsx"
 import { NotFound } from "./cmps/NotFound.jsx"
 import { BookEdit } from "./pages/BookEdit.jsx"
 import { UserMsg } from "./cmps/UserMsg.jsx"
+import { AddGoogleBook } from "./cmps/AddGoogleBook.jsx"
 
 
 
@@ -27,6 +28,7 @@ export function App() {
                         <Route path="/books/:bookId" element={<BookDetails />} />
                         <Route path="/books/edit" element={<BookEdit />} />
                         <Route path="/books/edit/:bookId" element={<BookEdit />} />
+                        <Route path="/books/google-book-select" element={<AddGoogleBook/>} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
