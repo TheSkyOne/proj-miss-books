@@ -1,0 +1,14 @@
+.rating-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+.rating-section input[type="number"] {
+    width: 3rem;
+}
+
+.rating-section div[type="stars"]:focus {
+    outline: 0px;
+}

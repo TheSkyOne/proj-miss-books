@@ -3,6 +3,7 @@ import { LongTxt } from "./LongTxt.jsx"
 import { AddReview } from "./AddReview.jsx"
 import { ReviewList } from "./ReviewList.jsx"
 import { ReviewListItem } from "./ReviewListItem.jsx"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
@@ -55,6 +56,8 @@ export function BookDetails(){
                 book.reviews = book.reviews.filter(review => review.id !== reviewId)
                 bookService.save(book)
                     .then(() => setReviews(prevReviews => prevReviews.filter(review => review.id !== reviewId)))
+                    .then(() => showSuccessMsg("Review removed successfully"))
+                    .catch(() => showErrorMsg("Failed to remove review"))
                 
             })
     }

@@ -1,34 +1,31 @@
-import { query, save, getEmptyBook } from "./books.service.js"
+import { query } from "./books.service.js"
+
+const BOOK_KEY = "books"
 
 export function queryGoogleBooks(title, responseHandler) {
     console.log(`sending query for title ${title}`)
-    $.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}`, responseHandler)
+    $.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}&maxResults=20`, responseHandler)
 }
 
 
-
 export function addGoogleBook(googleBook) {
-    console.log(googleBook)
-    const reformatedGoogleBook = _reformatGoogleBook({
-        thumbnail: googleBook.volumeInfo.imageLinks.thumbnail,
-        ...googleBook.volumeInfo
-    })
-
-    return query({ title: reformatedGoogleBook.title })
+    return query({ title: googleBook.title })
         .then(books => {
             for (const book of books) {
-                if (book.title === reformatedGoogleBook.title) {
+                if (book.title === googleBook.title) {
                     return Promise.reject("book with this title already exists")
                 }
             }
-            return Promise.resolve()
-        })
-        .then(() => {
-            console.log(reformatedGoogleBook)
 
-            return save(reformatedGoogleBook)
-                .then(() => console.log("google book saved successfully"))
-                .catch(() => console.log("failed to save google book"))
+            return saveGoogleBook(googleBook)
+                .then(() => {
+                    console.log("google book saved successfully")
+                    return Promise.resolve()
+                })
+                .catch((err) => {
+                    console.error("failed to save google book", err)
+                    return Promise.reject(err)
+                })
         })
         .catch(err => {
             console.error(err)
@@ -36,15 +33,12 @@ export function addGoogleBook(googleBook) {
         })
 }
 
-function _reformatGoogleBook(googleBook) {
-    const reformatedGoogleBook = Object.keys(getEmptyBook()).reduce((acc, key) => {
-        if (key in googleBook) {
-            acc[key] = googleBook[key]
-        }
-        return acc
-    }, {})
 
-    //some google books dont have listPrice, so add default values if not found
-    reformatedGoogleBook["listPrice"] = reformatedGoogleBook["listPrice"] || {amount: 0, isOnSale: false}
-    return reformatedGoogleBook
+export function saveGoogleBook(book) {
+    book = { ...book }
+    return query(BOOK_KEY).then(entities => {
+        entities.push(book)
+        localStorage.setItem(BOOK_KEY, JSON.stringify(entities))
+        return book
+    })
 }

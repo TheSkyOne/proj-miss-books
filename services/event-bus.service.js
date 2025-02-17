@@ -1,6 +1,4 @@
 export const eventBusService = createEventEmitter()
-// window.evBus = eventBusService
-
 
 function createEventEmitter() {
     const listenersMap = {}
@@ -22,8 +20,6 @@ function createEventEmitter() {
 }
 
 
-////////////////////////////////////////////////////
-
 function showUserMsg(msg) {
     eventBusService.emit('show-user-msg', msg)
 }
@@ -35,19 +31,4 @@ export function showSuccessMsg(txt) {
 export function showErrorMsg(txt) {
     showUserMsg({ txt, type: 'error' })
 }
-
-// window.showSuccessMsg = showSuccessMsg
-// window.showErrorMsg = showErrorMsg
-
-
-
-//* Service Testing:
-//* Example for using the service
-// const unsubscribe = eventBusService.on('some-event', (data) => {
-//     console.log('Got some-event:', data)
-// })
-
-// eventBusService.on('some-event', (data) => {
-//     console.log('I have also got it!:', data)
-// })
 

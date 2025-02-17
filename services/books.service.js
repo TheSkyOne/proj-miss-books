@@ -80,7 +80,7 @@ export function getEmptyBook() {
 function addReview(bookId, review) {
     return get(bookId)
         .then(book => {
-            review["id"] = review["id"] || makeId()
+            review.id = makeId()
             if (book.reviews) book.reviews.push(review)
             else book["reviews"] = [review]
             return save(book)

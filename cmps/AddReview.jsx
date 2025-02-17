@@ -1,21 +1,31 @@
-import { reviewService } from "../services/books.service.js"
+import { getEmptyBook, reviewService } from "../services/books.service.js"
 import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 
-const { useState } = React
+const { useState, useRef } = React
 
 
 export function AddReview({ bookId, onReviewAdded }) {
     const [review, setReview] = useState(reviewService.getEmptyReview())
+    const [rateType, setRateType] = useState("stars")
 
     function handleInputLoseFocus({ target }) {
         let { value, name: field } = target
-        switch (target.type) {
+        switch (target.getAttribute("type")) {
             case "text":
             case "date":
                 value = target.value
-                break;
+                break
+
             case "range":
+            case "number":
+                console.log(+target.value)
                 value = +target.value
+                break
+
+            case "stars":
+                value = target.getAttribute("value")
+                field = target.getAttribute("name")
+                break
         }
         setReview(prevReview => ({ ...prevReview, [field]: value }))
     }
@@ -26,10 +36,14 @@ export function AddReview({ bookId, onReviewAdded }) {
             .then(() => {
                 showSuccessMsg("Review added successfully!")
                 onReviewAdded(review)
+                setReview(reviewService.getEmptyReview())
             })
             .catch(() => showErrorMsg("Review could not be added..."))
     }
 
+    function onRatingTypeChnaged(newType) {
+        setRateType(newType)
+    }
 
     return (
         <form className="add-review">
@@ -38,9 +52,12 @@ export function AddReview({ bookId, onReviewAdded }) {
                 <input onBlur={handleInputLoseFocus} type="text" id="reviewer-name" name="reviewerName" required></input>
             </div>
 
-            <div className="review-field">
-                <label htmlFor="rating">Rating: </label>
-                <input onBlur={handleInputLoseFocus} type="range" id="rating" name="rating" min="1" max="5" defaultValue="3" required></input>
+            <div className="rating-section">
+                <div className="review-field">
+                    <label htmlFor="rating">Rating: </label>
+                    <DynamicRatingCmp type={rateType} handleInputLoseFocus={handleInputLoseFocus} />
+                </div>
+                <RatingSelection onRatingSelected={onRatingTypeChnaged} />
             </div>
 
             <div className="review-field">
@@ -50,5 +67,87 @@ export function AddReview({ bookId, onReviewAdded }) {
 
             <button onClick={onReviewSubmit} className="submit-review">Submit Review</button>
         </form>
+    )
+}
+
+
+function RatingSelection({ onRatingSelected }) {
+
+    return (
+        <fieldset className="dynamic-rating-selection">
+            <legend>Pick rating method</legend>
+            <div>
+                <input onClick={() => onRatingSelected("stars")} type="radio" id="rate-stars" name="rate" value="stars" defaultChecked></input>
+                <label htmlFor="rate-stars">Rate by stars</label>
+            </div>
+            <div>
+                <input onClick={() => onRatingSelected("selection")} type="radio" id="rate-select" name="rate" value="select"></input>
+                <label htmlFor="rate-select">Rate by selecting</label>
+            </div>
+            <div>
+                <input onClick={() => onRatingSelected("number")} type="radio" id="rate-number" name="rate" value="number"></input>
+                <label htmlFor="rate-number">Rate by number input</label>
+            </div>
+        </fieldset>
+    )
+}
+
+
+function DynamicRatingCmp({ type, handleInputLoseFocus }) {
+    const cmpMap = {
+        stars: <RateByStars onReviewFieldLoseFocus={handleInputLoseFocus} />,
+        selection: <RateBySelection onReviewFieldLoseFocus={handleInputLoseFocus} />,
+        number: <RateByNumber onReviewFieldLoseFocus={handleInputLoseFocus} />
+    }
+
+    return cmpMap[type]
+}
+
+
+function RateByStars({ onReviewFieldLoseFocus }) {
+    const elDiv = useRef()
+    const [fullStarCount, setFullStarCount] = useState(3)
+
+    const emptyStar = "☆"
+    const fullStar = "★"
+
+    function getMousePos({ nativeEvent: { offsetX } }) {
+        const divWidth = elDiv.current.offsetWidth
+        const starThreshold = divWidth / 5
+        setFullStarCount(Math.ceil(offsetX / starThreshold))
+    }
+
+    const starStr = `${fullStar.repeat(fullStarCount)}${emptyStar.repeat(5 - fullStarCount)}`
+
+    const eventHandlers = {
+        onBlur: onReviewFieldLoseFocus,
+        onMouseMove: getMousePos,
+        onMouseEnter: () => elDiv.current.focus(),
+    }
+
+    return (
+        <div type="stars" value={fullStarCount} ref={elDiv} id="stars-rating" name="rating" {...eventHandlers} tabIndex={0} style={{ display: "inline" }}>{starStr}</div>
+    )
+}
+
+function RateBySelection({ onReviewFieldLoseFocus }) {
+    const [rating, setRating] = useState(3)
+
+    function onRatingChanged({ target }) {
+        setRating(+target.value)
+    }
+
+    return (
+        <div>
+            <input onChange={onRatingChanged} onBlur={onReviewFieldLoseFocus} type="range" id="selection-rating" name="rating" min="1" max="5" defaultValue="3" required></input>
+            <label htmlFor="rating">{rating}</label>
+        </div>
+    )
+}
+
+function RateByNumber({ onReviewFieldLoseFocus }) {
+
+    return (
+        <input onBlur={onReviewFieldLoseFocus} type="number" id="number-rating" name="rating" min="1" max="5" defaultValue="3" required></input>
     )
 }
