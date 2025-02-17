@@ -17,8 +17,9 @@
     color: var(--clr1);
     font-size: 4em;
     font-weight: bolder;
-    margin-block: 0;
+    margin-block: 0 2rem;
     text-transform: capitalize;
+    max-width: 80rem;
 }
 
 .book-details .subtitle {

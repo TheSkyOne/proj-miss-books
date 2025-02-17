@@ -32,6 +32,7 @@ export function AddReview({ bookId, onReviewAdded }) {
 
     function onReviewSubmit(ev) {
         ev.preventDefault()
+        //check review keys not falsy
         reviewService.addReview(bookId, review)
             .then(() => {
                 showSuccessMsg("Review added successfully!")
@@ -55,7 +56,7 @@ export function AddReview({ bookId, onReviewAdded }) {
             <div className="rating-section">
                 <div className="review-field">
                     <label htmlFor="rating">Rating: </label>
-                    <DynamicRatingCmp type={rateType} handleInputLoseFocus={handleInputLoseFocus} />
+                    <DynamicRatingCmp review={review} type={rateType} handleInputLoseFocus={handleInputLoseFocus} />
                 </div>
                 <RatingSelection onRatingSelected={onRatingTypeChnaged} />
             </div>
@@ -93,18 +94,18 @@ function RatingSelection({ onRatingSelected }) {
 }
 
 
-function DynamicRatingCmp({ type, handleInputLoseFocus }) {
+function DynamicRatingCmp({ review, type, handleInputLoseFocus }) {
     const cmpMap = {
-        stars: <RateByStars onReviewFieldLoseFocus={handleInputLoseFocus} />,
-        selection: <RateBySelection onReviewFieldLoseFocus={handleInputLoseFocus} />,
-        number: <RateByNumber onReviewFieldLoseFocus={handleInputLoseFocus} />
+        stars: <RateByStars review={review} onReviewFieldLoseFocus={handleInputLoseFocus} />,
+        selection: <RateBySelection review={review} onReviewFieldLoseFocus={handleInputLoseFocus} />,
+        number: <RateByNumber review={review} onReviewFieldLoseFocus={handleInputLoseFocus} />
     }
 
     return cmpMap[type]
 }
 
 
-function RateByStars({ onReviewFieldLoseFocus }) {
+function RateByStars({ review, onReviewFieldLoseFocus }) {
     const elDiv = useRef()
     const [fullStarCount, setFullStarCount] = useState(3)
 
@@ -130,7 +131,7 @@ function RateByStars({ onReviewFieldLoseFocus }) {
     )
 }
 
-function RateBySelection({ onReviewFieldLoseFocus }) {
+function RateBySelection({ review, onReviewFieldLoseFocus }) {
     const [rating, setRating] = useState(3)
 
     function onRatingChanged({ target }) {
@@ -139,15 +140,15 @@ function RateBySelection({ onReviewFieldLoseFocus }) {
 
     return (
         <div>
-            <input onChange={onRatingChanged} onBlur={onReviewFieldLoseFocus} type="range" id="selection-rating" name="rating" min="1" max="5" defaultValue="3" required></input>
+            <input onChange={onRatingChanged} onBlur={onReviewFieldLoseFocus} type="range" id="selection-rating" name="rating" min="1" max="5" defaultValue={review.rating} required></input>
             <label htmlFor="rating">{rating}</label>
         </div>
     )
 }
 
-function RateByNumber({ onReviewFieldLoseFocus }) {
+function RateByNumber({ review, onReviewFieldLoseFocus }) {
 
     return (
-        <input onBlur={onReviewFieldLoseFocus} type="number" id="number-rating" name="rating" min="1" max="5" defaultValue="3" required></input>
+        <input onBlur={onReviewFieldLoseFocus} type="number" id="number-rating" name="rating" min="1" max="5" defaultValue={review.rating} required></input>
     )
 }

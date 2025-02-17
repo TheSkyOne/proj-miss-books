@@ -47,7 +47,7 @@ export function BookDetails(){
     }
 
     function onReviewAdded(review){
-        setReviews(prevReviews => [...prevReviews, review])
+        setReviews(prevReviews => [...prevReviews || [], review])
     }
 
     function onReviewRemoveClicked(reviewId) {

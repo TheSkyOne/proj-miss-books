@@ -95,7 +95,7 @@ function getEmptyReview() {
     return {
         id: "",
         reviewerName: "",
-        rating: 1,
+        rating: 3,
         readDate: ""
     }
 }
